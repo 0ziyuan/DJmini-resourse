@@ -14,7 +14,7 @@ DJmini是一款音乐游戏，提供了流畅的节奏游戏体验，目前仅�
 
 #### 下载及运行
 
-1. 访问https://gitee.com/wanli-0ziyuan/DJmini-release，下载压缩包：
+1. [下载压缩包：](https://gitee.com/wanli-0ziyuan/DJmini-release)
 
    ![](https://gitee.com/wanli-0ziyuan/gitee-graph-bed/raw/master/img/20201207140113.png)
 
@@ -79,7 +79,7 @@ Windows10家庭版中文版，系统类型为64位，选用Visual Studio 2019 Co
 
 #### 所需文件下载
 
-https://gitee.com/wanli-0ziyuan/DJmini-resourse
+[下载压缩包](https://gitee.com/wanli-0ziyuan/DJmini-resourse)
 
 ![](https://gitee.com/wanli-0ziyuan/gitee-graph-bed/raw/master/img/20201207151526.png)
 
