@@ -1,7 +1,5 @@
 # DJmini
 
-![](https://gitee.com/wanli-0ziyuan/gitee-graph-bed/raw/master/img/20201120213405.png)
-
 ## 项目描述
 
 音乐游戏，大二C++结课作业，依赖于acllib库实现，仅支持Windows环境下运行。
@@ -352,7 +350,9 @@ GifArea的编号和gif图片名序列用于加载图片前更改文件名，以�
 
 ###### 函数原型
 
+```c++
 void initNote();
+```
 
 ###### 函数实现
 
@@ -364,7 +364,9 @@ nLeftRect加上音符宽度赋给nLeftRect
 
 ###### 函数原型
 
+```c++
 void movedown();
+```
 
 ###### 函数实现
 
@@ -374,12 +376,21 @@ nTopRect和nBottomRect均增加一定值，值越大，下落越快。
 
 ###### 函数原型
 
+```c++
 void drawNote();
+```
 
 ###### 函数实现
 
 1. 判断style的值。如果为0，则通过setPenColor和setBrushColor函数定义画笔画刷为蓝色；否则定义画笔画刷为紫色。
-2. 通过绘制圆角矩形的函数roundrect(nLeftRect,nTopRect,nRightRect,nBottomRect,nWidth,nHeight);绘制音符。
+
+2. 通过acllib库中绘制圆角矩形的函数
+
+   ```c++
+   roundrect(nLeftRect,nTopRect,nRightRect,nBottomRect,nWidth,nHeight);
+   ```
+
+   绘制音符。
 
 #### Area类
 
@@ -387,7 +398,9 @@ void drawNote();
 
 ###### 函数原型
 
+```c++
 Area(int x, int y, int width, int height);
+```
 
 ###### 函数实现
 
@@ -397,7 +410,9 @@ Area(int x, int y, int width, int height);
 
 函数原型
 
+```c++
 Area(Area& area);
+```
 
 函数实现
 
@@ -407,7 +422,9 @@ Area(Area& area);
 
 函数原型
 
+```c++
 ~Area();
+```
 
 函数实现
 
@@ -417,7 +434,9 @@ Area(Area& area);
 
 ###### 函数原型
 
+```c++
 virtual void drawArea() = 0;
+```
 
 ###### 函数实现
 
@@ -429,7 +448,9 @@ virtual void drawArea() = 0;
 
 ###### 函数原型
 
+```c++
 GifArea(int x, int y, int width, int height,int num,int* Zhen,int* Dt, int Id);
+```
 
 ###### 函数实现
 
@@ -441,7 +462,9 @@ GifArea(int x, int y, int width, int height,int num,int* Zhen,int* Dt, int Id);
 
 ###### 函数原型
 
+```c++
 void drawArea();//从父类Area类继承的纯虚函数
+```
 
 ###### 函数实现
 
@@ -459,7 +482,9 @@ void drawArea();//从父类Area类继承的纯虚函数
 
 ###### 函数原型
 
+```c++
 void next();
+```
 
 ###### 函数实现
 
@@ -476,77 +501,116 @@ void next();
 
 ###### 函数原型
 
+```c++
 Playarea(int x, int y, int width, int height);
+```
 
 ###### 函数实现
 
-###### 
+ 将传入的x, y, width, height通过参数表传给从父类Area继承的成员变量x, y, width, height。
 
 ##### 生成音符
 
 ###### 函数原型
 
+```c++
 void createNote();
+```
 
 ###### 函数实现
 
-
+1. new一个Note类的对象，并将其地址存放到Playarea类的note[nowNum]成员中；
+2. 通过note[nowNum]调用Note类的initNote();函数，初始化新的音符；
+3. 表示已生成音符数的nowNum自增。
 
 ##### 所有音符下移
 
 ###### 函数原型
 
+```c++
 void move();
+```
 
 ###### 函数实现
 
-
+1. 循环判断所有已生成音符的note地址是否为空；
+2. 地址为空，说明音符已消失；否则，调用Note类的movedown();函数，使该音符下落；
+3. 判断该音符的上边沿纵坐标是否超出窗体，超出则delete掉该音符。
 
 ##### 判定是否命中音符
 
 ###### 函数原型
 
+```c++
 void judge(int key);
+```
 
 ###### 函数实现
 
-
+1. 通过Acllib库的loadSound("敲击.wav", &hit);函数加载命中音效；
+2. 以传入参数key为关键字，运用switch语句进行按键判断；
+3. 每个case语句中的判断逻辑大致为：所有已生成且未消失的音符下边沿纵坐标是否超过判定线；如果成立，进一步判断该音符的音轨和颜色是否和按键相匹配。若均满足，则命中数加一，delete掉该音符，并播放命中音效。
 
 ##### 区域绘制函数
 
 ###### 函数原型
 
+```c++
 void drawArea();//从父类Area类继承的纯虚函数
+```
 
 ###### 函数实现
 
-
+1. 先用loadImage();putImageScale();绘制背景；
+2. 通过循环，调用drawNote();函数绘制所有已生成且未消失的音符；
+3. 通过setTextBkColor();setTextColor();setTextSize();设置好文本绘制参数；
+4. 调用paintText();绘制命中率和游戏进度。
 
 #### 全局函数
 
 ##### 加载各个GIF动画帧数
 
+###### 函数原型
+
 ```c++
 void loadzhen(int* zhen);
 ```
+
+###### 功能
 
 传入一个整型数组的地址，将各个GIF动画帧数存放进该数组。
 
 ##### 加载各个GIF动画每帧间隔时间
 
+###### 函数原型
+
 ```c++
 void loaddt(int* dt);
 ```
+
+###### 功能
 
 传入一个整型数组的地址，将各个GIF动画每帧间隔时间存放进该数组。
 
 #### 窗体
 
-生成程序窗体，title : 窗口标题。left : 窗口左上角横坐标，若不希望指定窗口位置，可传入 DEFAULT。 top : 窗口左上角纵坐标，若不希望指定窗口位置，可传入 DEFAULT。 width : 窗口可绘制区域的宽度。 height : 窗口可绘制区域的高度。
+###### 函数原型
 
 ```c++
 initWindow(const char title[], int left, int top, int width, int height);
 ```
+
+###### 功能
+
+生成程序窗体。
+
+title : 窗口标题。
+
+left : 窗口左上角横坐标，若不希望指定窗口位置，可传入 DEFAULT。 
+
+top : 窗口左上角纵坐标，若不希望指定窗口位置，可传入 DEFAULT。 
+
+width : 窗口可绘制区域的宽度。 height : 窗口可绘制区域的高度。
 
 #### 背景音乐
 
@@ -615,8 +679,59 @@ void keyEvent(int key, int event){}
 
 ### 测试方法
 
+黑盒测试。主要是对软件界面和软件功能进行测试。检查程序的功能是否能够按照规范说明准确无误的运行。
+
 ### 测试过程
+
+#### 本地测试
+
+##### 执行程序
+
+###### 操作
+
+双击.exe文件
+
+###### 实际效果
+
+![](https://gitee.com/wanli-0ziyuan/gitee-graph-bed/raw/master/img/20201213163046.png)
+
+##### 倒计时
+
+###### 预期效果
+
+播放5秒倒计时动画，倒计时结束，游戏开始；
+
+###### 实际效果
+
+![](https://gitee.com/wanli-0ziyuan/gitee-graph-bed/raw/master/img/20201213163249.png)
+
+##### 游戏过程
+
+###### 操作
+
+按下相应按键
+
+###### 预期效果
+
+1. 音符自动生成，下落。
+2. 玩家按键击打，命中则音符消失，伴随命中音效，命中率增加；
+3. 游戏区右上角实时显示命中率和游戏进度；
+4. 动画区播放GIF动画。
+
+###### 实际效果
+
+![](https://gitee.com/wanli-0ziyuan/gitee-graph-bed/raw/master/img/20201213163630.png)
+
+##### 游戏结束
+
+###### 预期效果
+
+游戏进度到达100%，游戏结束。片刻后在动画播放区显示评级，伴有音效。
+
+###### 实际效果
+
+![](https://gitee.com/wanli-0ziyuan/gitee-graph-bed/raw/master/img/20201213165348.png)
 
 ### 测试结果
 
-未完待续。。。
+程序较好地实现了预期功能。
